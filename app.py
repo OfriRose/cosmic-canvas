@@ -10,8 +10,8 @@ from typing import Optional
 import os
 
 # Import utility modules
-from utils.apod_api import get_apod
-from utils.mast_api import (
+from backend.apod_api import get_apod
+from backend.mast_api import (
     get_telescope_images,
     get_preview_url,
     format_metadata,
