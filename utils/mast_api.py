@@ -62,7 +62,8 @@ def get_telescope_images(
             # Return empty DataFrame with expected columns
             return pd.DataFrame(columns=[
                 "target_name", "obs_id", "obsid", "instrument_name", "filters",
-                "t_obs_release", "proposal_id", "dataproduct_type", "obs_collection"
+                "t_obs_release", "proposal_id", "dataproduct_type", "obs_collection",
+                "jpegURL"
             ])
         
         # Convert to pandas DataFrame and sort by observation date
@@ -78,7 +79,8 @@ def get_telescope_images(
         # Select and rename relevant columns
         columns_to_keep = [
             "target_name", "obs_id", "obsid", "instrument_name", "filters",
-            "t_obs_release", "proposal_id", "dataproduct_type", "obs_collection"
+            "t_obs_release", "proposal_id", "dataproduct_type", "obs_collection",
+            "jpegURL"
         ]
         
         # Only keep columns that exist
