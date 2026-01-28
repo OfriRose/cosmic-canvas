@@ -6,7 +6,7 @@ from the James Webb Space Telescope (JWST) and Hubble Space Telescope (HST).
 """
 
 import pandas as pd
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Union
 import streamlit as st
 from astroquery.mast import Observations
 import warnings
@@ -32,7 +32,8 @@ def get_telescope_images(
     Returns:
         DataFrame with columns:
             - target_name: Name of the observed target
-            - obs_id: Observation ID
+            - obs_id: Observation ID (string)
+            - obsid: Observation ID (numeric)
             - instrument_name: Instrument used
             - filters: Filters used in observation
             - t_obs_release: Observation release date
@@ -60,7 +61,7 @@ def get_telescope_images(
         if len(observations) == 0:
             # Return empty DataFrame with expected columns
             return pd.DataFrame(columns=[
-                "target_name", "obs_id", "instrument_name", "filters",
+                "target_name", "obs_id", "obsid", "instrument_name", "filters",
                 "t_obs_release", "proposal_id", "dataproduct_type", "obs_collection"
             ])
         
@@ -76,7 +77,7 @@ def get_telescope_images(
         
         # Select and rename relevant columns
         columns_to_keep = [
-            "target_name", "obs_id", "instrument_name", "filters",
+            "target_name", "obs_id", "obsid", "instrument_name", "filters",
             "t_obs_release", "proposal_id", "dataproduct_type", "obs_collection"
         ]
         
@@ -91,12 +92,12 @@ def get_telescope_images(
 
 
 @st.cache_data(ttl=3600)
-def get_observation_products(obs_id: str) -> List[Dict[str, Any]]:
+def get_observation_products(obs_id: Union[str, int]) -> List[Dict[str, Any]]:
     """
     Get data products (including preview images) for a specific observation.
     
     Args:
-        obs_id: Observation ID
+        obs_id: Observation ID (numeric ID preferred, strictly required for some queries)
     
     Returns:
         List of dictionaries containing product information
@@ -124,7 +125,7 @@ def get_observation_products(obs_id: str) -> List[Dict[str, Any]]:
         return []
 
 
-def get_preview_url(obs_id: str) -> Optional[str]:
+def get_preview_url(obs_id: Union[str, int]) -> Optional[str]:
     """
     Get the preview image URL for an observation.
     

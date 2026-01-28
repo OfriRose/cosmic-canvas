@@ -144,7 +144,9 @@ def display_image_gallery(telescope: str, object_filter: Optional[str], limit: i
                         st.markdown(f"**{target_name}**")
                         
                         # Try to get preview image
-                        preview_url = get_preview_url(obs['obs_id'])
+                        # Prefer numeric obsid if available to avoid DB type errors
+                        obs_identifier = obs.get('obsid') if 'obsid' in obs and pd.notna(obs.get('obsid')) else obs['obs_id']
+                        preview_url = get_preview_url(obs_identifier)
                         
                         if preview_url:
                             st.image(preview_url, use_container_width=True)
