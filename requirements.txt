@@ -1,0 +1,7 @@
+streamlit>=1.30.0
+pandas>=2.0.0
+requests>=2.31.0
+astroquery>=0.4.6
+Pillow>=10.0.0
+plotly>=5.18.0
+streamlit-image-comparison>=0.0.4
